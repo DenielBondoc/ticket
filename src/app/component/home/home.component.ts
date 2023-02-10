@@ -35,10 +35,9 @@ export class HomeComponent implements OnInit {
     {value: 'Ready for deployment', viewValue: 'Ready for deployment'},
   ];
 
+  pickMe: ID[] = [];
   task: ID[] = [];
-  
   inProg: ID[] = [];
-  
   done: ID[] = [];
   
   todoForm !: FormGroup;
@@ -56,7 +55,6 @@ export class HomeComponent implements OnInit {
   }
 
   getAllTickets(){
-
     this.data.getAllTickets().subscribe({
         next: res => {
         this.ticketList = res.map((e: any) => {
@@ -97,11 +95,12 @@ export class HomeComponent implements OnInit {
     if(window.confirm('Are you sure you want to delete ' + tickets.id + ' ' + tickets.owner_name))
     this.data.deleteTicket(tickets)
   }
-
+  
   addTask(){
-    this.task.push({
+    this.pickMe.push({
       id:this.todoForm.value.item,
     });
+    
   }
 
 
@@ -122,5 +121,10 @@ export class HomeComponent implements OnInit {
         event.currentIndex,
       );
     }
+  }
+
+  saveTicket(){
+    const value = this.todoForm.value.item;
+    localStorage.setItem('description', value)
   }
 }

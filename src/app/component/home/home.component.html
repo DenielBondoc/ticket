@@ -10,7 +10,131 @@
                     </div>
                     <button type="button" class="btn btn-warning text-center" (click)="register()">Logout</button>
                   </form>
+                  <!-- <form [formGroup]="todoForm">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Ticket</mat-label>
+                        <input formControlName="item" matInput placeholder="Placeholder">
+                        <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+                      </mat-form-field>
+                      <button (click)="addTask()" class="mat-raised-button" [disabled]="todoForm.invalid" color="primary">Add</button>
+                  </form> -->
             </div>
         </div>
     </div>
+</div>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-4 mt-5">
+            <div class="card border-0 shadow p-3">
+                
+                <div class="form-floating mb-3 text-center">
+                    <h5 class="text-center text-warning">Add Tickets</h5>
+                </div>
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="owner_name" name="owner_name" [(ngModel)]="owner_name">
+                    <label for="owner_name">Owner Name</label>
+                </div>   
+                <form [formGroup]="todoForm">
+                    <div class="form-floating  mb-3">
+                        <input formControlName="item" type="text" class="form-control" id="description" name="description" [(ngModel)]="description">
+                        <label for="description">Description</label>
+                    </div>
+                </form>
+                    <!-- <div class="form-floating mb-3">
+                        <input  type="text" class="form-control" id="status" name="status" [(ngModel)]="status">
+                        <label for="status">Status</label>
+                    </div> -->
+                    <mat-form-field appearance="fill">
+                        <mat-label>Status</mat-label>
+                        <mat-select [(ngModel)]="status">
+                          <mat-option *ngFor="let food of stats" [value]="food.value">
+                            {{food.viewValue}}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    <button type="button" class="btn btn-outline-success" (click)="addTicket(); addTask()">Add Ticket</button>
+            </div>
+        </div>
+        <div class="col-md-8 mt-2">
+            <h5 class="text-danger">Ticket List</h5>
+            <div class="card p-3 shadow">
+                <div class="card-body">
+                    <table class="table table-hover">
+                        <thead>
+                          <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Owner</th>
+                            <th scope="col">Description</th>
+                            <th scope="col">Status</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let tcket of ticketList">
+                            <td>{{ tcket.id }}</td>
+                            <td>{{ tcket.owner_name }}</td>
+                            <td>{{ tcket.description }}</td>
+                            <td>{{ tcket.status }}</td>
+                            <td>
+                                <button class="btn btn-outline-danger" (click)="deleteTicket(tcket)">Delete</button>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div cdkDropListGroup>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="example-container">
+                <h2>To do</h2>
+            
+                <div
+                  cdkDropList
+                  [cdkDropListData]="task"
+                  class="example-list"
+                  (cdkDropListDropped)="drop($event)">
+                  <div class="example-box" *ngFor="let item of task; let i = index" cdkDrag>{{item.id}}
+                    <div class="box">
+                        <button mat-icon-button  (click)="deleteTickets(i)"><mat-icon class="box" background="transparent"  color="warn">delete</mat-icon></button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+        </div>
+        <div class="col-md-4">
+            <div class="example-container">
+                <h2>In Progress</h2>
+            
+                <div
+                  cdkDropList
+                  [cdkDropListData]="inProg"
+                  class="example-list"
+                  (cdkDropListDropped)="drop($event)">
+                  <div class="example-box" *ngFor="let item of inProg; let i = index" cdkDrag>{{item.id}}
+                    <button mat-icon-button  (click)="deleteTickets(i)"><mat-icon background="transparent"  color="warn">delete</mat-icon></button>
+                  </div>
+                </div>
+              </div>
+        </div>
+        <div class="col-md-4">
+            <div class="example-container">
+                <h2>Ready For Deployment</h2>
+            
+                <div
+                  cdkDropList
+                  [cdkDropListData]="done"
+                  class="example-list"
+                  (cdkDropListDropped)="drop($event)">
+                  <div class="example-box" *ngFor="let item of done; let i = index" cdkDrag>{{item.id}}
+                    <button mat-icon-button  (click)="deleteTickets(i)"><mat-icon background="transparent"  color="warn">delete</mat-icon></button>
+                  </div>
+                </div>
+              </div>
+        </div>
+    </div>
+
 </div>
